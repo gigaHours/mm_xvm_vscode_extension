@@ -1,0 +1,65 @@
+{
+    "name": "xvm-language",
+    "displayName": "XVM Script Language",
+    "description": "Syntax highlighting and IntelliSense for Mad Max XVM script files (.xvm)",
+    "version": "0.2.0",
+    "publisher": "gibbed",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gigaHours/mm_xvm_vscode_extension"
+    },
+    "engines": {
+        "vscode": "^1.70.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "main": "./out/extension.js",
+    "activationEvents": [
+        "onLanguage:xvm"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "xvm",
+                "aliases": [
+                    "XVM Script",
+                    "xvm"
+                ],
+                "extensions": [
+                    ".xvm"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "xvm",
+                "scopeName": "source.xvm",
+                "path": "./syntaxes/xvm.tmLanguage.json"
+            }
+        ],
+        "configuration": {
+            "title": "XVM Script",
+            "properties": {
+                "xvm.globalsPath": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Absolute path to xvm_globals.txt file. If empty, the extension searches in workspace root, workspace/bin/, and next to the extension."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.70.0",
+        "@types/node": "^18.0.0",
+        "typescript": "^5.0.0",
+        "@vscode/vsce": "^3.0.0"
+    }
+}

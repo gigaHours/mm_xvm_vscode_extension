@@ -1,0 +1,171 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "XVM Script",
+    "scopeName": "source.xvm",
+    "patterns": [
+        { "include": "#directive" },
+        { "include": "#comment" },
+        { "include": "#string" },
+        { "include": "#function-definition" },
+        { "include": "#module-declaration" },
+        { "include": "#import-statement" },
+        { "include": "#keyword-control" },
+        { "include": "#keyword-logical" },
+        { "include": "#constant-language" },
+        { "include": "#hash-literal" },
+        { "include": "#number" },
+        { "include": "#engine-module-call" },
+        { "include": "#engine-module-access" },
+        { "include": "#function-call" },
+        { "include": "#self-variable" },
+        { "include": "#local-variable" },
+        { "include": "#arg-variable" },
+        { "include": "#method-call" },
+        { "include": "#operator" },
+        { "include": "#punctuation" }
+    ],
+    "repository": {
+        "directive": {
+            "match": "^(#!)\\s*(source_hash|hash)\\s*(:)\\s*(0x[0-9A-Fa-f]+)",
+            "captures": {
+                "1": { "name": "punctuation.definition.directive.xvm" },
+                "2": { "name": "keyword.other.directive.xvm" },
+                "3": { "name": "punctuation.separator.key-value.xvm" },
+                "4": { "name": "constant.numeric.hex.xvm" }
+            },
+            "name": "meta.preprocessor.xvm"
+        },
+        "comment": {
+            "match": "(?<!!)#.*$",
+            "name": "comment.line.number-sign.xvm"
+        },
+        "string": {
+            "begin": "\"",
+            "end": "\"",
+            "name": "string.quoted.double.xvm",
+            "patterns": [
+                {
+                    "match": "\\\\[nrt\\\\\"']",
+                    "name": "constant.character.escape.xvm"
+                }
+            ]
+        },
+        "function-definition": {
+            "match": "\\b(def)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+            "captures": {
+                "1": { "name": "storage.type.function.xvm" },
+                "2": { "name": "entity.name.function.xvm" }
+            }
+        },
+        "module-declaration": {
+            "match": "\\b(module)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+            "captures": {
+                "1": { "name": "keyword.other.module.xvm" },
+                "2": { "name": "entity.name.namespace.xvm" }
+            }
+        },
+        "import-statement": {
+            "match": "\\b(import)\\s+(@[0-9A-Fa-f]+)",
+            "captures": {
+                "1": { "name": "keyword.other.import.xvm" },
+                "2": { "name": "constant.other.hash.xvm" }
+            }
+        },
+        "keyword-control": {
+            "match": "\\b(if|elif|else|while|return|pass|assert)\\b",
+            "name": "keyword.control.xvm"
+        },
+        "keyword-logical": {
+            "match": "\\b(and|or|not)\\b",
+            "name": "keyword.operator.logical.xvm"
+        },
+        "constant-language": {
+            "match": "\\b(true|false|none)\\b",
+            "name": "constant.language.xvm"
+        },
+        "hash-literal": {
+            "match": "@[0-9A-Fa-f]+\\b",
+            "name": "constant.other.hash.xvm"
+        },
+        "number": {
+            "match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b",
+            "name": "constant.numeric.xvm"
+        },
+        "engine-module-call": {
+            "match": "\\b(scriptgo|game|input|gui|character|vehicle|animation|physics|ai|math|vector|matrix|random|string|list|spring|camera|soundscripting|collision|raycast|interaction|constraint|rope|rigidobject|effect|ragdoll|model|flame|motiontracker|golist|xlsbook|vehiclemanager|playermodule|mission|ogccoord|playerstats|graphscript|sc|garagestate|legendsystem|healthbar|gamedirector|visibleplayerupgrades|racetrophies|relicsystem|upgradeablevaluesmanager|hydra|logbook|debug|lib_entity_proxy|lib_player_input|lib_vehicle)(\\.)([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+            "captures": {
+                "1": { "name": "support.class.engine.xvm" },
+                "2": { "name": "punctuation.accessor.dot.xvm" },
+                "3": { "name": "support.function.engine.xvm" }
+            }
+        },
+        "engine-module-access": {
+            "match": "\\b(scriptgo|game|input|gui|character|vehicle|animation|physics|ai|math|vector|matrix|random|string|list|spring|camera|soundscripting|collision|raycast|interaction|constraint|rope|rigidobject|effect|ragdoll|model|flame|motiontracker|golist|xlsbook|vehiclemanager|playermodule|mission|ogccoord|playerstats|graphscript|sc|garagestate|legendsystem|healthbar|gamedirector|visibleplayerupgrades|racetrophies|relicsystem|upgradeablevaluesmanager|hydra|logbook|debug|lib_entity_proxy|lib_player_input|lib_vehicle)(?=\\.)",
+            "name": "support.class.engine.xvm"
+        },
+        "function-call": {
+            "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+            "captures": {
+                "1": { "name": "entity.name.function.call.xvm" }
+            }
+        },
+        "self-variable": {
+            "match": "\\bself\\b",
+            "name": "variable.language.self.xvm"
+        },
+        "local-variable": {
+            "match": "\\b(local\\d+)\\b",
+            "name": "variable.other.local.xvm"
+        },
+        "arg-variable": {
+            "match": "\\b(arg\\d+)\\b",
+            "name": "variable.parameter.xvm"
+        },
+        "method-call": {
+            "match": "(?<=\\.)([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+            "captures": {
+                "1": { "name": "entity.name.function.member.xvm" }
+            }
+        },
+        "operator": {
+            "patterns": [
+                {
+                    "match": "==|!=|>=|>",
+                    "name": "keyword.operator.comparison.xvm"
+                },
+                {
+                    "match": "[+\\-*/%]",
+                    "name": "keyword.operator.arithmetic.xvm"
+                },
+                {
+                    "match": "(?<![=!><])=(?!=)",
+                    "name": "keyword.operator.assignment.xvm"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "match": "\\.",
+                    "name": "punctuation.accessor.dot.xvm"
+                },
+                {
+                    "match": ",",
+                    "name": "punctuation.separator.comma.xvm"
+                },
+                {
+                    "match": ":",
+                    "name": "punctuation.separator.colon.xvm"
+                },
+                {
+                    "match": "[\\(\\)]",
+                    "name": "punctuation.parenthesis.xvm"
+                },
+                {
+                    "match": "[\\[\\]]",
+                    "name": "punctuation.bracket.xvm"
+                }
+            ]
+        }
+    }
+}
